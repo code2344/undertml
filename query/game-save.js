@@ -21,7 +21,7 @@ var xp = q('xp');
 var gold = q('gold');
 var money = q('money');
 var plot = q('charname');
-var menuchoice[n] where 0 <= n < 3 = q('menuchoice');
+// var menuchoice[n] where 0 <= n < 3 = q('menuchoice');
 var currentsong = q('currentsong');
 var savesong = q('savesong');
 var song = q('song');

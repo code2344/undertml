@@ -3,7 +3,7 @@ try {
 
 
 
-Start and end script inside 'try' for debugging.
+// Start and end script inside 'try' for debugging.
 
 
 

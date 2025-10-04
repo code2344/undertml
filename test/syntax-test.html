@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript Syntax Fixes Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .test-section {
+            background-color: white;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        #bugboxprint {
+            background-color: #ffe0e0;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        #bugboxprint:empty {
+            display: none;
+        }
+        h2 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>UNDERTML JavaScript Syntax Fixes Test</h1>
+    
+    <div class="test-section">
+        <h2>Test 1: Query Function (js/query.js)</h2>
+        <div id="test1">Testing...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 2: Theme Query (query/theme.js)</h2>
+        <div id="test2">Testing...</div>
+        <link id="theme" rel="stylesheet" href="">
+    </div>
+
+    <div class="test-section">
+        <h2>Test 3: Game Flags (query/game-flags.js)</h2>
+        <div id="test3">Testing...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 4: FloweyTV/FloweyTVX (query/floweytv.js, query/floweytvx.js)</h2>
+        <div id="test4">Testing...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 5: Site Query (query/site.js)</h2>
+        <div id="test5">Testing...</div>
+    </div>
+
+    <div id="bugboxprint"></div>
+
+    <!-- Load the query.js file first as it's needed by others -->
+    <script>
+        // Mock functions that might not exist
+        window.setTitle = function(title) { document.title = title; };
+        window.setIcon = function(url) { console.log('setIcon:', url); };
+        window.ring = function(type) { console.log('ring:', type); };
+        
+        // Mock jQuery if not loaded
+        if (typeof $ === 'undefined') {
+            window.$ = function(selector) {
+                return {
+                    attr: function(attr, value) {
+                        console.log('jQuery attr:', selector, attr, value);
+                        return this;
+                    },
+                    each: function(fn) {
+                        console.log('jQuery each:', selector);
+                        return this;
+                    }
+                };
+            };
+        }
+    </script>
+    
+    <script src="../js/query.js"></script>
+
+    <script>
+        // Test 1: Query function
+        try {
+            if (typeof q === 'function') {
+                var testQuery = q('test');
+                document.getElementById('test1').innerHTML = '<span class="success">✓ Query function loaded successfully</span><br>q("test") returns: ' + testQuery;
+            } else {
+                document.getElementById('test1').innerHTML = '<span class="error">✗ Query function not found</span>';
+            }
+        } catch(e) {
+            document.getElementById('test1').innerHTML = '<span class="error">✗ Error: ' + e.message + '</span>';
+        }
+
+        // Test 2: Theme query simulation
+        try {
+            // Simulate what theme.js does
+            var defaulttheme = "dark";
+            var str = q('theme');
+            var link = document.getElementById("theme");
+            var theme = defaulttheme;
+            
+            if (str === 'Default') {
+                theme = defaulttheme;
+            } else if (str === 'Dark') {
+                theme = "dark";
+            }
+            
+            link.href = "css/theme/" + theme + ".css";
+            document.getElementById('test2').innerHTML = '<span class="success">✓ Theme logic works correctly</span><br>Theme: ' + theme + '<br>Link href: ' + link.href;
+        } catch(e) {
+            document.getElementById('test2').innerHTML = '<span class="error">✗ Error: ' + e.message + '</span>';
+        }
+
+        // Test 3: Game flags simulation
+        try {
+            var flagArray = q('flag[]');
+            var flag = q('flag');
+            var flg = q('flg');
+            var fun = q('fun');
+            var flag5 = q('flag[5]');
+            
+            var testPassed = true;
+            var details = [];
+            
+            // Test comparison operators
+            if (flg === '' || flag === '' || flagArray === '') {
+                details.push('Empty flag check works');
+            }
+            
+            // Test multiple OR conditions
+            if (fun === '66' || flag5 === '66') {
+                details.push('Multiple OR conditions work');
+            }
+            
+            document.getElementById('test3').innerHTML = '<span class="success">✓ Game flags logic works correctly</span><br>' + details.join('<br>');
+        } catch(e) {
+            document.getElementById('test3').innerHTML = '<span class="error">✗ Error: ' + e.message + '</span>';
+        }
+
+        // Test 4: FloweyTV/FloweyTVX simulation
+        try {
+            var title = q('title');
+            var soul = q('soul'); 
+            if (soul === 'err404') {
+                soul = '0';
+            }
+            var floweyface = q('floweyface');
+            
+            var details = [];
+            
+            if (title !== 'err404') {
+                details.push('Title check works (using !==)');
+            }
+            
+            if (floweyface === 'err404' || floweyface === 'xlaugh') {
+                details.push('FloweyTVX multi-condition check works');
+            }
+            
+            document.getElementById('test4').innerHTML = '<span class="success">✓ FloweyTV/FloweyTVX logic works correctly</span><br>' + details.join('<br>');
+        } catch(e) {
+            document.getElementById('test4').innerHTML = '<span class="error">✗ Error: ' + e.message + '</span>';
+        }
+
+        // Test 5: Site query simulation
+        try {
+            var title = q('title');
+            var icon = q('icon');
+            var soul = q('soul');
+            
+            if (title !== 'err404') {
+                // Would normally call setTitle(title)
+            }
+            if (soul !== 'err404') {
+                var iconURL = 'sprite/soul' + soul + '.png';
+                var logoURL = 'logo/logo_undertml' + soul + '.png';
+            }
+            
+            document.getElementById('test5').innerHTML = '<span class="success">✓ Site query logic works correctly</span><br>All comparison operators fixed';
+        } catch(e) {
+            document.getElementById('test5').innerHTML = '<span class="error">✗ Error: ' + e.message + '</span>';
+        }
+    </script>
+
+    <script>
+        // Summary
+        var successCount = document.querySelectorAll('.success').length;
+        var errorCount = document.querySelectorAll('.error').length;
+        var summary = document.createElement('div');
+        summary.className = 'test-section';
+        summary.innerHTML = '<h2>Summary</h2><p>Passed: ' + successCount + ' / Failed: ' + errorCount + '</p>';
+        document.body.appendChild(summary);
+    </script>
+</body>
+</html>

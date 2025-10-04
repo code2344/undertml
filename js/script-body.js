@@ -8,11 +8,14 @@ body.appendChild(txt);
 document.appendChild(body);
 }
 function setImg(imgURL,imgClass,imgId) {
-var cssQuery = document.querySelectorAll("div[class="+sprClass+"][id="+sprId+"],span[class="+sprClass+"][id="+sprId+"]");
+var cssQuery = document.querySelectorAll("div[class="+imgClass+"][id="+imgId+"],span[class="+imgClass+"][id="+imgId+"]");
 cssQuery.src = imgURL;
 }
 function setSprite(sprURL,sprClass,sprId) {
-document.querySelectorAll("div[class="+sprClass+"][id="+sprId+"]","span[class="+sprClass+"][id="+sprId+"]").style.background-image = sprURL
+var elements = document.querySelectorAll("div[class="+sprClass+"][id="+sprId+"],span[class="+sprClass+"][id="+sprId+"]");
+for (var i = 0; i < elements.length; i++) {
+  elements[i].style.backgroundImage = sprURL;
+}
 }
 function setBodyCSS(csstxt) {
   document.body.style = csstxt;
@@ -21,8 +24,8 @@ function setBgColor(bgcolor) {
   document.body.style.backgroundColor = bgcolor;
 }
 function setBgImg(bgurl) {
-  document.body.style.backgroundImage = url(bgurl);
+  document.body.style.backgroundImage = "url(" + bgurl + ")";
 }
-function setCursor(curlsor) {
-  document.body.style.cursor = url(curlsor),auto;
+function setCursor(cursor) {
+  document.body.style.cursor = "url(" + cursor + "), auto";
 }
