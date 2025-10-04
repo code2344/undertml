@@ -30,7 +30,7 @@ function qt(variablet) {
 }
 // Query in the frame named by 'wname'
 function qn(variablen,wname) {
-  var query = window.wname.location.search.substring(1);
+  var query = window.frames[wname].location.search.substring(1);
   var vars = query.split("&");
   for (var i=0;i<vars.length;i++) {
     var pair = vars[i].split("=");
@@ -40,10 +40,11 @@ function qn(variablen,wname) {
 }
 
 // Carry query with action
-function (thelink,thelocation) {
-       window.open(thelink+location.search,'thelocation');
+function carryQuery(thelink,thelocation) {
+  window.open(thelink+location.search,'thelocation');
 }
 
 // Carry query auto
-// var x = document.getElementsByTagName("a"); var i; for (i = 0; i < x.length; i++) {x[i].href = +window.location.search;}
-$("a").attr("href", +window.location.search);
+// var x = document.getElementsByTagName("a"); var i; for (i = 0; i < x.length; i++) {x[i].href = x[i].href + window.location.search;}
+// Note: The following line requires jQuery. Uncomment if jQuery is loaded:
+// $("a").each(function() { this.href += window.location.search; });
